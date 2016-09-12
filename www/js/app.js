@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'ionic-material','ion-floating-menu']);
+var app = angular.module('starter', ['ionic', 'ionic-material','ng-mfb']);
 
 app.run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
@@ -33,63 +33,46 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         url : '/main',
         views : {
             'menuContent' : {
-                templateUrl : 'templates/main.html',
-                controller : 'MainCtrl'
+                templateUrl : 'templates/main.html'
             }
         }
-    })
+    });
 
-    .state('app.lists', {
-        url: '/lists',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/lists.html',
-                controller: 'ListsCtrl'
-            }
-        }
-    })
-
-    .state('app.ink', {
-        url: '/ink',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/ink.html',
-                controller: 'InkCtrl'
-            }
-        }
-    })
-
-    .state('app.motion', {
-        url: '/motion',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/motion.html',
-                controller: 'MotionCtrl'
-            }
-        }
-    })
-
-    .state('app.components', {
-        url: '/components',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/components.html',
-                controller: 'ComponentsCtrl'
-            }
-        }
-    })
-
-    .state('app.extensions', {
-        url: '/extensions',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/extensions.html',
-                controller: 'ExtensionsCtrl'
-            }
-        }
-    })
-    ;
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/components');
+    $urlRouterProvider.otherwise('/app/main');
+});
+
+
+app.controller('MainCtrl', function($scope, $ionicModal){
+    console.log(1);
+    $ionicModal
+    .fromTemplateUrl('modalNama.html',{
+        scope : $scope,
+        animation : 'slide-in-up'
+    }).then(function(modal){
+        $scope.modalNama = modal;
+    });
+
+    $ionicModal
+    .fromTemplateUrl('modalNISN.html',{
+        scope : $scope,
+        animation : 'slide-in-up'
+    }).then(function(modal){
+        $scope.modalNISN = modal;
+    });
+
+
+    $scope.showModalNISN = function(){
+        console.log(1);
+        $scope.modalNISN.show();        
+    };
+
+
+    $scope.showModalNama = function(){
+        console.log(1);
+        $scope.modalNama.show();
+    }
+
+
 });
