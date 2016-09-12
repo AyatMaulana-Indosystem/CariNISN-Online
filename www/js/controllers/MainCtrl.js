@@ -1,5 +1,4 @@
 app.controller('MainCtrl', function($scope, $ionicModal){
-	console.log(2);
 	$ionicModal
 	.fromTemplateUrl('modalNama.html',{
 		scope : $scope,
@@ -18,18 +17,15 @@ app.controller('MainCtrl', function($scope, $ionicModal){
 		$scope.modalNISN = modal;
 	// });
 
-	$scope.nacak = function(){
-		console.log('hallo');
-	}
-
 	$scope.showModalNISN = function(){
-		console.log(1);
+		console.log(324234231);
+		$scope.opt = 'closed';
 		$scope.modalNISN.show();		
 	};
 
 
 	$scope.showModalNama = function(){
-		console.log(1);
+		console.log(32432);
 		$scope.opt = 'closed';
 		$scope.modalNama.show();
 	}

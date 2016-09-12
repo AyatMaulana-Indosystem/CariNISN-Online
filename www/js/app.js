@@ -45,7 +45,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
 
 app.controller('MainCtrl', function($scope, $ionicModal){
-    console.log(1);
     $ionicModal
     .fromTemplateUrl('modalNama.html',{
         scope : $scope,
@@ -65,12 +64,14 @@ app.controller('MainCtrl', function($scope, $ionicModal){
 
     $scope.showModalNISN = function(){
         console.log(1);
+        $scope.opt = 'closed';
         $scope.modalNISN.show();        
     };
 
 
     $scope.showModalNama = function(){
         console.log(1);
+        $scope.opt = 'closed';
         $scope.modalNama.show();
     }
 
