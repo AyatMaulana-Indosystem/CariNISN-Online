@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-app.controller('MainCtrl', function($scope){
-	// 
-=======
 app.controller('MainCtrl', function($scope, $ionicModal){
 	$ionicModal
 	.fromTemplateUrl('modalNama.html',{
@@ -35,5 +31,4 @@ app.controller('MainCtrl', function($scope, $ionicModal){
 	}
 
 
->>>>>>> Stashed changes
 });
