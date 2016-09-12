@@ -69,15 +69,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
     })
 
-    .state('app.components', {
-        url: '/components',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/components.html',
-                controller: 'ComponentsCtrl'
-            }
-        }
-    })
+app.controller('MainCtrl', function($scope, $ionicModal){
+    $ionicModal
+    .fromTemplateUrl('modalNama.html',{
+        scope : $scope,
+        animation : 'slide-in-up'
+    }).then(function(modal){
+        $scope.modalNama = modal;
+    });
 
     .state('app.extensions', {
         url: '/extensions',
@@ -90,6 +89,19 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     })
     ;
 
-    // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/components');
+
+    $scope.showModalNISN = function(){
+        console.log(1);
+        $scope.opt = 'closed';
+        $scope.modalNISN.show();        
+    };
+
+
+    $scope.showModalNama = function(){
+        console.log(1);
+        $scope.opt = 'closed';
+        $scope.modalNama.show();
+    }
+
+
 });
