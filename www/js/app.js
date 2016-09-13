@@ -44,7 +44,31 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 
-app.controller('MainCtrl', function($scope, $ionicModal){
+// Factory
+// app.factory('getNISNByNama', function($http, $scope, param){
+//     if(param == "nisn") {
+//         $getNISN = $http.get("http://ibacor.com/api/data-siswa",{
+//             params : {
+//                 'nisn' : $scope.data.nisn
+//             }
+//         })
+//     }
+
+//     if(param == "nama") {
+//         $getNISN = $http.get("http://ibacor/api/data-sisa", {
+//             params : {
+//                 'nama' : $scope.data.nama,
+//                 'tempat' : $scope.data.tempat,
+//                 'lahir' : $scope.data.lahir
+//             }
+//         })
+//     }
+
+//     return $getNISN;
+// })
+
+
+app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup){
     $ionicModal
     .fromTemplateUrl('modalNama.html',{
         scope : $scope,
@@ -61,6 +85,73 @@ app.controller('MainCtrl', function($scope, $ionicModal){
         $scope.modalNISN = modal;
     });
 
+    $scope.popupNIS = function(){
+        $scope.opt = 'closed';
+
+        var popupNIS = $ionicPopup.show({
+            template: 'Masukan NISN {{ nisn }} <font color="red">*</font> <br><input type="text" ng-model="nisn"/>',
+                title: 'Masukan data pada kolom dibawah ini',
+                scope: $scope,
+                buttons: [
+                  { 
+                    text: '<b>Cancel</b>',
+                    type: 'button-light' 
+                  },
+                  {
+                    text: '<b>Save</b>',
+                    type: 'button-assertive',
+                    onTap: function(e) {
+                        e.preventDefault();
+
+                        console.log($scope);
+                        // $http.get("http://ibacor.com/api/data-siswa",{
+                        //     params : {
+                        //         'nisn' : $scope.nisn
+                        //     }
+                        // }).success(function(data){
+                        //     console.log(data);
+                        // }).error(function(data){
+                        //     console.log(data);
+                        // });
+
+                    }
+                  }
+                ]
+        });
+
+         popupNIS.then(function(res) {
+            console.log('Tapped!', res);
+          });
+    }
+
+    $scope.popupNama = function(){
+        $scope.opt = 'closed';
+
+        var popupNama = $ionicPopup.show({
+            template: '<b>Nama <font color="red">*</font><b> <br><input type="text" ng-model="data"/><br><b>Tempat Lahir <font color="red">*</font></b><br><input type="text" /><br><b>Tanggal Lahir <font color="red">*</font></b><br><input type="date" />',
+                title: 'Masukan data pada kolom dibawah ini',
+                scope: $scope,
+                buttons: [
+                    { 
+                    text: '<b>Cancel</b>',
+                    type: 'button-light' 
+                  },
+                  {
+                    text: '<b>Save</b>',
+                    type: 'button-assertive',
+                    onTap: function(e) {
+                        e.preventDefault();
+                        console.log($getNISN);
+
+                    }
+                  }
+                ]
+        });
+
+         popupNama.then(function(res) {
+            console.log('Tapped!', res);
+          });
+    };
 
     $scope.showModalNISN = function(){
         console.log(1);
