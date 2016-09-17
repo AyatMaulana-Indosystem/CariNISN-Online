@@ -33,9 +33,19 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         url : '/main',
         views : {
             'menuContent' : {
-                templateUrl : 'templates/main.html'
+                templateUrl : 'templates/main.html',
+                controller : 'MainCtrl'
             }
         }
+    })
+
+    .state('app.outputNISN', {
+      url : '/outputNISN',
+      views : {
+          'menuContent' : {
+            templateUrl : 'templates/output/outputNISN.html'
+          }
+      }
     });
 
 
@@ -68,7 +78,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 // })
 
 
-app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup){
+app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ionicLoading){
     $ionicModal
     .fromTemplateUrl('modalNama.html',{
         scope : $scope,
@@ -86,16 +96,18 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup){
     });
 
     $scope.popupNIS = function(){
+        $scope.ctrl = this;
         $scope.opt = 'closed';
+        $scope.nisn = '9996032640';
 
         var popupNIS = $ionicPopup.show({
-            template: 'Masukan NISN {{ nisn }} <font color="red">*</font> <br><input type="text" ng-model="nisn"/>',
+            template: '<div>Masukan NISN {{ nisn }} <font color="red">*</font> <br><input type="text" ng-model="nisn"/></div>',
                 title: 'Masukan data pada kolom dibawah ini',
                 scope: $scope,
                 buttons: [
-                  { 
+                  {
                     text: '<b>Cancel</b>',
-                    type: 'button-light' 
+                    type: 'button-light'
                   },
                   {
                     text: '<b>Save</b>',
@@ -103,17 +115,23 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup){
                     onTap: function(e) {
                         e.preventDefault();
 
-                        console.log($scope);
-                        // $http.get("http://ibacor.com/api/data-siswa",{
-                        //     params : {
-                        //         'nisn' : $scope.nisn
-                        //     }
-                        // }).success(function(data){
-                        //     console.log(data);
-                        // }).error(function(data){
-                        //     console.log(data);
-                        // });
+                        $ionicLoading.show({
+                            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
+                        }).then(function(){
+                            popupNIS.close()
+                            $http.get("http://ibacor.com/api/data-siswa",{
+                                params : {
+                                    'nisn' : $scope.nisn
+                                }
+                            }).success(function(data){
+                                $ionicLoading.hide();
+                                console.log(data);
 
+                                window.location = "#/app/outputNISN";
+                            }).error(function(data){
+                                console.log(data);
+                            });
+                        });
                     }
                   }
                 ]
@@ -132,9 +150,9 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup){
                 title: 'Masukan data pada kolom dibawah ini',
                 scope: $scope,
                 buttons: [
-                    { 
+                    {
                     text: '<b>Cancel</b>',
-                    type: 'button-light' 
+                    type: 'button-light'
                   },
                   {
                     text: '<b>Save</b>',
@@ -156,7 +174,7 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup){
     $scope.showModalNISN = function(){
         console.log(1);
         $scope.opt = 'closed';
-        $scope.modalNISN.show();        
+        $scope.modalNISN.show();
     };
 
 
