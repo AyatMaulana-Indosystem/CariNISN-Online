@@ -1,6 +1,6 @@
-<ion-view title="Output">
-    <ion-content class="im-wrapper">
-        <ion-list class="disable-user-behavior animate-fade-slide-in-right"><div class="list">
+<ion-view title="Output" ng-controller="OutputCtrl">
+    <ion-content class="" overflow-scroll="false">
+        <!--<ion-list class="disable-user-behavior animate-fade-slide-in-right"><div class="list">
             <ion-item nav-clear="" menu-close="" class="item-icon-right  item in done" ng-click="blinds();" style="transition-delay: 0.53s;">
                 <h2>Nama</h2>
                 <p>ionic.material.motion.blinds();</p>
@@ -26,6 +26,57 @@
                 <p>ionic.material.motion.fadeSlideInRight();</p>
                 <i class="icon ion-chatbubble muted"></i>
             </ion-item>
-        </div></ion-list>
+        </div></ion-list>-->
+
+        <div class="content">
+            <div class="hero button-assertive" style="height:35vh">
+                <div class="content">
+                    <!--<div class="avatar button-red" style="background-image: url('../../img/cowo.png');"></div>-->
+                    <div ng-show="result.siswa[0].jenis_kelamin == 'Laki Laki'">
+                        <img src="../../img/cowo.png" alt="" style="margin-top:6em !important">
+                    </div>
+                    <div ng-show="result.siswa[0].jenis_kelamin == 'Perempuan'">
+                        <img src="../../img/cewe.png" alt="" style="margin-top:6em !important">
+                    </div>
+                    <h3 style="position:relative;top:10px;margin-bottom:30px;font-weight:bold"><a class="light">{{ result.siswa[0].nama }}</a></h3>
+                </div>
+            </div>
+            <!--<div class="button-bar">
+                <button class="button button-dark waves-effect waves-button waves-classic icon ion-images"></button>
+                <button class="button button-dark waves-effect waves-button waves-classic icon ion-stats-bars"></button>
+            </div>-->
+            <!--<h4 class="positive content padding double-padding-x assertive">Data Diri</h4>-->
+            <br><br>
+            <div class="list animate-fade-slide-in-right">
+                <a class="item item-avatar waves-effect waves-button waves-dark in done" style="transition-delay: 0.39s;">
+                    <span class="avatar text-center" style="">
+                        <i class="ion-android-bookmark" style="font-size:2.5em"></i>
+                    </span> 
+                    <h2>NISN</h2>
+                    <p>{{ result.siswa[0].nisn }} </p>
+                </a>
+                <a class="item item-avatar waves-effect waves-button waves-dark in done" style="transition-delay: 0.39s;">
+                    <span class="avatar text-center" style="">
+                        <i class="icon ion-android-add-circle" style="font-size:2.5em"></i>
+                    </span>
+                    <h2>Jenis Kelamin</h2>
+                    <p>{{ result.siswa[0].jenis_kelamin }} </p>
+                </a>
+                <a class="item item-avatar waves-effect waves-button waves-dark in" style="transition-delay: 0.42s;">
+                    <span class="avatar text-center" style="">
+                        <i class="ion-android-contacts" style="font-size:3em"></i>
+                    </span>
+                    <h2>Tempat Lahir</h2>
+                    <p>{{ result.siswa[0].tempat_lahir }} </p>
+                </a>
+                <a class="item item-avatar waves-effect waves-button waves-dark in" style="transition-delay: 0.42s;">
+                    <span class="avatar text-center" style="">
+                        <i class="ion-android-favorite" style="font-size:3em"></i>
+                    </span>
+                    <h2>Tanggal Lahir</h2>
+                    <p>{{ result.siswa[0].tanggal_lahir }} </p>
+                </a>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

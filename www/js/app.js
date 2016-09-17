@@ -78,7 +78,23 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 // })
 
 
-app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ionicLoading){
+app.service('saveNisn', function(){
+    var result;
+
+    this.byNisn = function(data){
+        result = data;
+        // console.log(result);
+        // return data;
+    }
+
+    this.out = function(){
+        console.log(result);
+        return result;
+    }
+
+});
+
+app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ionicLoading, $rootScope, saveNisn){
     $ionicModal
     .fromTemplateUrl('modalNama.html',{
         scope : $scope,
@@ -98,10 +114,14 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ion
     $scope.popupNIS = function(){
         $scope.ctrl = this;
         $scope.opt = 'closed';
-        $scope.nisn = '9996032640';
+        // $scope.nisn = '9996032640';
+        // $scope.nisn = '9971027894';
+
+        $scope.nisn = {nisn : ''};
+
 
         var popupNIS = $ionicPopup.show({
-            template: '<div>Masukan NISN {{ nisn }} <font color="red">*</font> <br><input type="text" ng-model="nisn"/></div>',
+            template: '<div>Masukan NISN <font color="red">*</font> <br><input type="text" ng-model="nisn.nisn"/></div>',
                 title: 'Masukan data pada kolom dibawah ini',
                 scope: $scope,
                 buttons: [
@@ -118,14 +138,16 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ion
                         $ionicLoading.show({
                             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
                         }).then(function(){
+                            console.log($scope.nisn.nisn);
                             popupNIS.close()
                             $http.get("http://ibacor.com/api/data-siswa",{
                                 params : {
-                                    'nisn' : $scope.nisn
+                                    'nisn' : $scope.nisn.nisn
                                 }
                             }).success(function(data){
                                 $ionicLoading.hide();
-                                console.log(data);
+                                // saveNisn.byNisn(data);
+                                $rootScope.result = data;
 
                                 window.location = "#/app/outputNISN";
                             }).error(function(data){
@@ -185,4 +207,10 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ion
     }
 
 
+});
+
+
+app.controller('OutputCtrl', function($scope, $rootScope, saveNisn){
+    $scope.result = $rootScope.result;
+    console.log($scope.result);
 });
