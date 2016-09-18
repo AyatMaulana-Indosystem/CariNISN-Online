@@ -95,12 +95,6 @@ app.service('saveNisn', function(){
 });
 
 app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ionicLoading, $rootScope, saveNisn){
-    $scope.currentDare = new Date();
-    $scope.minDate = new Date(2105, 6, 1);
-    $scope.maxDate = new Date(2015, 6, 31);
-    $scope.datePickerCallback = function(val){
-        console.log(val);
-    }
 
     $ionicModal
     .fromTemplateUrl('modalNama.html',{
@@ -128,15 +122,15 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ion
 
         var popupNIS = $ionicPopup.show({
             template: '<div>Masukan NISN <font color="red">*</font> <br><input type="text" ng-model="nisn.nisn"/></div>',
-                title: 'Masukan data pada kolom dibawah ini',
+                title: '',
                 scope: $scope,
                 buttons: [
                   {
-                    text: '<b>Cancel</b>',
+                    text: '<b>Batal</b>',
                     type: 'button-light'
                   },
                   {
-                    text: '<b>Save</b>',
+                    text: '<b>Ok</b>',
                     type: 'button-assertive',
                     onTap: function(e) {
                         e.preventDefault();
@@ -179,15 +173,15 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ion
 
         var popupNama = $ionicPopup.show({
                 template: ' <b>Nama <font color="red">*</font><b> <br><input type="text" ng-model="byId.nama"/><br><b>Tempat Lahir <font color="red">*</font></b><br><input type="text" ng-model="byId.tempat_lahir"/><br><b>Tanggal Lahir <font color="red">*</font></b><br><input type="date" ng-model="byId.tanggal_lahir"/>',
-                title: 'Masukan data pada kolom dibawah ini',
+                title: '',
                 scope: $scope,
                 buttons: [
                   {
-                    text: '<b>Cancel</b>',
+                    text: '<b>Batal</b>',
                     type: 'button-light'
                   },
                   {
-                    text: '<b>Save</b>',
+                    text: '<b>Ok</b>',
                     type: 'button-assertive',
                     onTap: function(e) {
                         e.preventDefault();

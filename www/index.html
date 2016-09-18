@@ -38,6 +38,7 @@
 
 </head>
 <body ng-controller="MainCtrl">
+    <input type="hidden" name="tgl_lahir" value="{{ byId.tanggal_lahir | date : 'yyyy-MM-dd' }}" />
     <!--<ion-pane>
         <ion-header-bar class="bar-stable">
             <h1 class="title">Ionic Blank Starter</h1>
@@ -53,37 +54,12 @@
 
 
 <nav mfb-menu position="br" effect="slidein-spring" 
-     active-icon="ion-edit" resting-icon="ion-plus-round"
+     active-icon="ion-close" resting-icon="ion-search"
      toggling-method="click" bgcolor="#F44336" menu-state="opt">
   <button mfb-button bgcolor="#F44336" icon="ion-person" label="Berdasarkan Nama" ng-click="popupNama()"></button>
   <button mfb-button bgcolor="#F44336" icon="ion-calendar" label="Berdasarkan NISN" ng-click="popupNIS()"> </button>
 </nav>
     
-    
-
-    <script id="modalNama.html" type="text/ng-template">
-      <ion-modal-view modal-title="Cari Berdasarkan Nama">
-         <ion-header-bar class="bar-assertive">
-            <button class="button button-icon button-clear ion-chevron-left" ng-click="modalNama.hide()" menu-toggle="left"></button>
-        </ion-header-bar>
-        <ion-content overflow-scroll="false">
-          Hello!
-        </ion-content>
-      </ion-modal-view>
-    </script>
-
-
-    <script id="modalNISN.html" type="text/ng-template">
-      <ion-modal-view modal-title="Cari Berdasarkan NISN">
-         <ion-header-bar class="bar-assertive">
-            <button class="button button-icon button-clear ion-chevron-left" ng-click="modalNISN.hide()" menu-toggle="left"></button>
-        </ion-header-bar>
-        <ion-content overflow-scroll="false">
-          Hello!
-        </ion-content>
-      </ion-modal-view>
-    </script>
-
     <!-- <div id="modal" class=""></div> -->
 </body>
 </html>
