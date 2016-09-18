@@ -17,11 +17,8 @@
 
     // .fromTemplate() method
     var template = '<ion-popover-view>' +
-                    '   <ion-header-bar>' +
-                    '       <h1 class="title">My Popover Title</h1>' +
-                    '   </ion-header-bar>' +
-                    '   <ion-content class="padding">' +
-                    '       My Popover Contents' +
+                    '   <ion-content class="padding" overflow-scroll="false">' +
+                    '       <center><b>Cari NISN Online</b><br>(c) 2016 Ayat Maulana</center>' +
                     '   </ion-content>' +
                     '</ion-popover-view>';
 

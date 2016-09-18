@@ -38,7 +38,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             }
         }
     })
-
+    .state('app.404',{
+        url : '/404',
+        views : {
+            'menuContent' : {
+                templateUrl : 'templates/notfound/404.html'
+            }
+        }
+    })
     .state('app.outputNISN', {
       url : '/outputNISN',
       views : {
@@ -96,21 +103,21 @@ app.service('saveNisn', function(){
 
 app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ionicLoading, $rootScope, saveNisn){
 
-    $ionicModal
-    .fromTemplateUrl('modalNama.html',{
-        scope : $scope,
-        animation : 'slide-in-up'
-    }).then(function(modal){
-        $scope.modalNama = modal;
-    });
+    // $ionicModal
+    // .fromTemplateUrl('modalNama.html',{
+    //     scope : $scope,
+    //     animation : 'slide-in-up'
+    // }).then(function(modal){
+    //     $scope.modalNama = modal;
+    // });
 
-    $ionicModal
-    .fromTemplateUrl('modalNISN.html',{
-        scope : $scope,
-        animation : 'slide-in-up'
-    }).then(function(modal){
-        $scope.modalNISN = modal;
-    });
+    // $ionicModal
+    // .fromTemplateUrl('modalNISN.html',{
+    //     scope : $scope,
+    //     animation : 'slide-in-up'
+    // }).then(function(modal){
+    //     $scope.modalNISN = modal;
+    // });
 
     $scope.popupNIS = function(){
         $scope.ctrl = this;
@@ -146,12 +153,16 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ion
                                 }
                             }).success(function(data){
                                 $ionicLoading.hide();
-                                // saveNisn.byNisn(data);
+                                $rootScope.result = null;
+                                if(data.status == 'error')
+                                {
+                                    window.location = "#/app/404";
+                                    return false;
+                                }
+
                                 $rootScope.result = data;
 
                                 window.location = "#/app/outputNISN";
-                            }).error(function(data){
-                                console.log(data);
                             });
                         });
                     }
@@ -202,7 +213,16 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ion
                                 }
                             }).success(function(data){
                                 $ionicLoading.hide();
-                                // saveNisn.byNisn(data);
+                                $rootScope.result = null;
+
+                                console.log($scope.byId);
+                                console.log(tgl);
+                                if(data.status == 'error')
+                                {
+                                    window.location = "#/app/404";
+                                    return false;
+                                }
+
                                 $rootScope.result = data;
 
                                 window.location = "#/app/outputNISN";

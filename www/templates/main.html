@@ -1,10 +1,11 @@
 <ion-view view-title="Cek NISN Online" ng-controller="MainCtrl">
 	<ion-content class="scroll-content has-header" overflow-scroll="false">
+            <input type="hidden" name="tgl_lahir" value="{{ byId.tanggal_lahir | date : 'yyyy-MM-dd' }}" />
 		 <div class="im-wrapper">
             <!-- Ionic Components -->
             <h4 class="border-top">
                 <i class="icon ion-person"></i>
-                Cek NISN Online <br>
+                Cari NISN Online <br>
             </h4>
             <p>Aplikasi ini berguna untuk anda yang ingin mengetahu <strong>NISN</strong>  yang hilang</p>
             <p>
@@ -12,7 +13,19 @@
                    Aplikasi tidak Offline alias membutuhkan Koneksi Internet. untuk mencari Informasi NISN berdasarkan Nama (Identitas) Pilih <span style="color:red">Berdasarkan Nama</span>, dan untuk mencari Identitas berdasarkan NISN pilih <span style="color:red">Berdasarkan NISN</span>
                 </em>
             </p>
+            <p style="text-align:center">
+                <em>
+                    (c) 2016 Ayat Maulana <i class="ion-android-favorite assertive"></i> Sri Intan Melaniya
+                </em>
+            </p>
        </div>
 	</ion-content>
+
+    <nav mfb-menu position="br" effect="slidein-spring" 
+     active-icon="ion-close" resting-icon="ion-search"
+     toggling-method="click" bgcolor="#F44336" menu-state="opt">
+    <button mfb-button bgcolor="#F44336" icon="ion-person" label="Berdasarkan Nama" ng-click="popupNama()"></button>
+    <button mfb-button bgcolor="#F44336" icon="ion-calendar" label="Berdasarkan NISN" ng-click="popupNIS()"> </button>
+    </nav>
 </ion-view>
 
