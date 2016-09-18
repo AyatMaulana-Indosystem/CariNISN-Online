@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'ionic-material','ng-mfb']);
+var app = angular.module('starter', ['ionic', 'ionic-material','ng-mfb','ionic-datepicker']);
 
 app.run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
@@ -95,6 +95,13 @@ app.service('saveNisn', function(){
 });
 
 app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ionicLoading, $rootScope, saveNisn){
+    $scope.currentDare = new Date();
+    $scope.minDate = new Date(2105, 6, 1);
+    $scope.maxDate = new Date(2015, 6, 31);
+    $scope.datePickerCallback = function(val){
+        console.log(val);
+    }
+
     $ionicModal
     .fromTemplateUrl('modalNama.html',{
         scope : $scope,
@@ -118,7 +125,6 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ion
         // $scope.nisn = '9971027894';
 
         $scope.nisn = {nisn : ''};
-
 
         var popupNIS = $ionicPopup.show({
             template: '<div>Masukan NISN <font color="red">*</font> <br><input type="text" ng-model="nisn.nisn"/></div>',
@@ -158,21 +164,25 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ion
                   }
                 ]
         });
-
-         popupNIS.then(function(res) {
-            console.log('Tapped!', res);
-          });
-    }
+    };
 
     $scope.popupNama = function(){
+        $scope.ctrl = this;
         $scope.opt = 'closed';
 
+        $scope.byId = {
+            nama : '',
+            tempat_lahir : '',
+            tanggal_lahir : ''
+        };
+
+
         var popupNama = $ionicPopup.show({
-            template: '<b>Nama <font color="red">*</font><b> <br><input type="text" ng-model="data"/><br><b>Tempat Lahir <font color="red">*</font></b><br><input type="text" /><br><b>Tanggal Lahir <font color="red">*</font></b><br><input type="date" />',
+                template: ' <b>Nama <font color="red">*</font><b> <br><input type="text" ng-model="byId.nama"/><br><b>Tempat Lahir <font color="red">*</font></b><br><input type="text" ng-model="byId.tempat_lahir"/><br><b>Tanggal Lahir <font color="red">*</font></b><br><input type="date" ng-model="byId.tanggal_lahir"/>',
                 title: 'Masukan data pada kolom dibawah ini',
                 scope: $scope,
                 buttons: [
-                    {
+                  {
                     text: '<b>Cancel</b>',
                     type: 'button-light'
                   },
@@ -181,16 +191,38 @@ app.controller('MainCtrl', function($scope,$http, $ionicModal, $ionicPopup, $ion
                     type: 'button-assertive',
                     onTap: function(e) {
                         e.preventDefault();
-                        console.log($getNISN);
+                        // console.log($scope.tgl_lahir);
+                        var tgl = document.getElementsByName('tgl_lahir')[0].defaultValue;
+                        // $scope.byId.tanggal_lahir = tgl;
+                        console.log(tgl);
+                        $ionicLoading.show({
+                            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
+                        }).then(function(){
+                            // console.log($scope.byId);
+                            popupNama.close()
+                            $http.get("http://ibacor.com/api/data-siswa",{
+                                params : {
+                                    nama : $scope.byId.nama,
+                                    tempat : $scope.byId.tempat_lahir,
+                                    lahir : tgl
+                                }
+                            }).success(function(data){
+                                $ionicLoading.hide();
+                                // saveNisn.byNisn(data);
+                                $rootScope.result = data;
 
+                                window.location = "#/app/outputNISN";
+                            }).error(function(data){
+                                console.log(tgl);
+                                console.log($scope.byId);
+                                console.log(data);
+                            });
+                        });
                     }
                   }
                 ]
         });
 
-         popupNama.then(function(res) {
-            console.log('Tapped!', res);
-          });
     };
 
     $scope.showModalNISN = function(){
